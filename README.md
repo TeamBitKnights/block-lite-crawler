@@ -1,16 +1,15 @@
-# ethereum-lite-explorer-crawling
+# block-lite-crawler
 
-## Description
+## 설명
 
-This project is an open-source block explorer on EVM chain. If you follow this repository, you can run explorer in localhost. This repository provides crawling code and database set up. This logic accesses the chain RPC URL every 2.5 seconds, receives data and stores it in the database.
+이 프로젝트는 EVM 체인에서 작동하는 오픈소스 블록 탐색기입니다. 이 저장소를 통해 로컬에서 탐색기를 실행할 수 있습니다. 이 저장소는 데이터를 크롤링하는 코드와 데이터베이스 설정을 제공합니다. 이 로직은 체인의 RPC URL에 2.5초마다 접근하여 데이터를 수신하고 이를 데이터베이스에 저장합니다.
 
-## Getting Started
+## 시작하기
 
-### Setting up Database
+### 데이터베이스 설정
 
-**This is done in MySQL Workbench. Proceed with the workbench settings first.**
-<br>
-Create a database by executing the query statement below before running the crawling server.
+**이 작업은 MySQL 에서 수행됩니다. 먼저 설정을 진행하세요.**  
+크롤링 서버를 실행하기 전에 아래의 SQL 쿼리를 실행하여 데이터베이스를 생성하세요.
 
 ```sql
 CREATE DATABASE explorer_db;
@@ -45,15 +44,15 @@ CREATE TABLE contract_data(
 );
 ```
 
-### Installing
+### 설치 방법
 
-- Git clone this repo
+- 이 저장소를 Git 클론하세요.
 
 ```bash
-git clone https://github.com/Generation-Foundation/ethereum-lite-explorer-crawling.git
+git clone https://github.com/KAPUIST/block-lite-crawler.git
 ```
 
-- Create `.env` to update MySQL database settings.
+- MySQL 데이터베이스 설정을 업데이트하기 위해 `.env` 파일을 생성하세요.
 
 ```env
 DB_HOST="host"
@@ -62,13 +61,13 @@ DB_PASSWORD="password"
 DB_DATABASE="explorer_db"
 ```
 
-- Modify 'baseURL' in `etherApi.js` to your blockchain RPC URL
+- `etherApi.js` 파일에서 'baseURL'을 사용 중인 블록체인 RPC URL로 변경하세요.
 
 ```javascript
 const axios = require('axios');
 
 const etherApi = axios.create({
-  // change your blockchain RPC URL
+  // 블록체인 RPC URL을 변경하세요
   baseURL: 'https://eth.public-rpc.com',
   headers: { 'content-type': 'application/json' },
 });
@@ -76,7 +75,7 @@ const etherApi = axios.create({
 module.exports = { etherApi };
 ```
 
-- Run it local with the following command
+- 아래 명령어를 사용해 로컬에서 실행하세요.
 
 ```bash
 npm install --save

@@ -1,28 +1,39 @@
 const { db } = require('./db');
 const { etherApi } = require('./etherApi');
 
-const rpcGetLatestData = (blockNumber) => {
+const rpcGetLatestData = async (blockNumber) => {
   eth_getBlockByNumber(blockNumber);
 };
 
 const eth_getBlockByNumber = async (blockNumber) => {
-  let hex = blockNumber.toString(16);
-  console.log(blockNumber, 'blockNumber');
-  console.log(hex, 'hex');
+  try {
+    const hexBlockNumber = `0x${blockNumber.toString(16)}`;
+    console.log('Fetching block data for block:', hexBlockNumber);
 
-  const response = await etherApi.post('', {
-    jsonrpc: '2.0',
-    method: 'eth_getBlockByNumber',
-    params: ['0x' + hex, true],
-    id: 9,
-  });
+    const response = await etherApi.post('', {
+      jsonrpc: '2.0',
+      method: 'eth_getBlockByNumber',
+      params: [hexBlockNumber, true],
+      id: 1,
+    });
 
-  if (response.data.result === null) {
-    setTimeout(() => eth_getBlockByNumber(blockNumber), 1000);
-  } else {
-    console.log(response.data.result);
+    // RPC 응답 검증
+    if (!response.data || !response.data.result) {
+      console.log(`Block ${blockNumber} not found in the blockchain.`);
+      return; // 해당 블록 데이터가 없을 때는 안전하게 종료
+    }
+
     let blockTxArr = response.data.result.transactions;
+
+    console.log(`Block ${blockNumber} has ${blockTxArr.length} transactions`);
+
+    // 나머지 로직을 처리 (예: DB에 저장하거나 추가 작업)
     db_insertBlockData(response.data.result, blockTxArr);
+  } catch (error) {
+    console.error(
+      `Error fetching block data for block ${blockNumber}:`,
+      error.message
+    );
   }
 };
 

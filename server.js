@@ -6,7 +6,6 @@ const { rpcRecheckBlockNum } = require('./rpcRecheckBlockNum');
 
 require('dotenv').config();
 const port = process.env.PORT || 3006;
-console.log(process.env.PORT);
 // forever
 setInterval(() => rpcCheckBlockNum(), 2000); // Checking latest block data every 2 seconds
 setInterval(() => rpcRecheckBlockNum(), 60000); // Checking 30 previous block data every minute

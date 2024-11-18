@@ -49,7 +49,7 @@ CREATE TABLE contract_data(
 - 이 저장소를 Git 클론하세요.
 
 ```bash
-git clone https://github.com/KAPUIST/block-lite-crawler.git
+https://github.com/TeamOliveCode/block-lite-crawler.git
 ```
 
 - MySQL 데이터베이스 설정을 업데이트하기 위해 `.env` 파일을 생성하세요.
